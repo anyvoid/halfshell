@@ -186,6 +186,11 @@ func (ip *imageProcessor) resizePrepare(oldDimensions, reqDimensions ImageDimens
 		reqDimensions.Width = aspectWidth(oldAspectRatio, reqDimensions.Height)
 	}
 
+  // Do not change the image if it's dimensions less than the required.
+  if oldDimensions.Width < reqDimensions.Width && oldDimensions.Height < reqDimensions.Height {
+		return resize, nil
+  }
+
 	// Retain the aspect ratio while at least filling the bounds requested. No
 	// cropping will occur but the image will be resized.
 	if scaleMode == ScaleAspectFit {
